@@ -34,7 +34,7 @@ const SkillsGrid: React.FC<SkillsGridProps> = ({ skills }) => {
         });
       },
       {
-        threshold: 0.1, // Trigger when 10% of the section is visible (better for mobile)
+        threshold: 0.3, // Trigger when 10% of the section is visible (better for mobile)
         rootMargin: "0px", // Remove negative margin for mobile compatibility
       }
     );

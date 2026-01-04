@@ -14,7 +14,7 @@ const Footer: React.FC<FooterProps> = ({ data }) => {
           </div>
           <p className="text-gray-400 max-w-sm">
             {data.role}. Building software with purpose and precision. Open for
-            collaborations and internship opportunities.
+            collaborations, internship and full-time opportunities.
           </p>
         </div>
 
