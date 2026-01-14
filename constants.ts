@@ -11,7 +11,7 @@ export const PORTFOLIO_DATA = {
     degree: "M.S. in Computer Science",
     university: "Georgia State University",
     year: "Expected May 2026",
-    gpa: "3.72 / 4.0",
+    gpa: "3.76 / 4.0",
     achievements: [
       "B.S. in Computer Science (GPA: 4.0/4.0, President List)",
       "Lab Instructor for Theoretical Foundations & Discrete Math",
@@ -119,7 +119,7 @@ export const PORTFOLIO_DATA = {
       description:
         "Developed a production-grade industrial website for Regal Industrial Corporation using Next.js and TypeScript, featuring responsive design, reusable UI components, and SEO optimizations to enhance digital presence and accurately represent certifications and services.",
       tags: ["Next.js", "React", "TypeScript", "SEO", "Web Development"],
-      github: "https://github.com/william9087",
+      github: "https://regalindustrial.vercel.app",
       image: "img/regalindustrial.png",
     },
     {
@@ -128,7 +128,8 @@ export const PORTFOLIO_DATA = {
       description:
         "Android app recording motion sensor data during PIN entry to predict user inputs using Random Forest and XGBoost, demonstrating potential privacy risks.",
       tags: ["Android", "Kotlin", "Python", "ML", "Security"],
-      github: "https://github.com/william9087",
+      github:
+        "https://github.com/william9087/Privacy-leakage-thru-mobile-sensor-data",
       image:
         "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800",
     },
