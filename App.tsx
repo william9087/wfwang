@@ -25,7 +25,7 @@ const App: React.FC = () => {
       {
         threshold: 0.5,
         rootMargin: "0px",
-      }
+      },
     );
 
     if (aboutRef.current) {

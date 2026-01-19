@@ -72,6 +72,14 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
               View Projects
             </a>
             <a
+              href="/resume.pdf"
+              download="Wei_Fan_Wang_Resume.pdf"
+              target="_blank"
+              className="px-8 py-4 bg-transparent border border-blue-500/50 text-blue-400 font-bold rounded-xl hover:bg-blue-500/10 transition-all hover:scale-105 active:scale-95 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+            >
+              Download Resume
+            </a>
+            <a
               href="#contact"
               className="px-8 py-4 glass border-white/10 text-white font-bold rounded-xl hover:bg-white/5 transition-all hover:scale-105 active:scale-95"
             >

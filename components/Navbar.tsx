@@ -8,6 +8,7 @@ const Navbar: React.FC = () => {
     { name: "Experience", href: "#experience" },
     { name: "Skills", href: "#skills" },
     { name: "Projects", href: "#projects" },
+    { name: "Resume", href: "/resume.pdf", target: "_blank" },
   ];
 
   return (
@@ -21,6 +22,8 @@ const Navbar: React.FC = () => {
           <a
             key={item.name}
             href={item.href}
+            target={item.target}
+            rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
             className="relative px-4 py-2 hover:text-blue-400 transition-colors"
             onMouseEnter={() => setHoveredItem(item.name)}
             onMouseLeave={() => setHoveredItem(null)}
