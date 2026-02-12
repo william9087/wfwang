@@ -27,27 +27,33 @@ const Navbar: React.FC = () => {
             className="relative px-4 py-2 hover:text-blue-400 transition-colors"
             onMouseEnter={() => setHoveredItem(item.name)}
             onMouseLeave={() => setHoveredItem(null)}
+            onClick={(e) => {
+              if (item.href.startsWith("#")) {
+                e.preventDefault();
+                const element = document.querySelector(item.href);
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth" });
+                }
+              }
+            }}
           >
             <span
-              className={`absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/0 via-blue-500/20 to-purple-500/0 transition-all duration-500 ease-out ${
-                hoveredItem === item.name
-                  ? "opacity-100 scale-100"
-                  : "opacity-0 scale-90"
-              }`}
+              className={`absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/0 via-blue-500/20 to-purple-500/0 transition-all duration-500 ease-out ${hoveredItem === item.name
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-90"
+                }`}
             />
             <span
-              className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-blue-400 to-transparent transition-all duration-500 ease-out ${
-                hoveredItem === item.name
-                  ? "opacity-100 translate-x-0"
-                  : "opacity-0 -translate-x-2"
-              }`}
+              className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-blue-400 to-transparent transition-all duration-500 ease-out ${hoveredItem === item.name
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 -translate-x-2"
+                }`}
             />
             <span
-              className={`absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-purple-400 to-transparent transition-all duration-500 ease-out ${
-                hoveredItem === item.name
-                  ? "opacity-100 translate-x-0"
-                  : "opacity-0 translate-x-2"
-              }`}
+              className={`absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-purple-400 to-transparent transition-all duration-500 ease-out ${hoveredItem === item.name
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 translate-x-2"
+                }`}
             />
             <span className="relative z-10">{item.name}</span>
           </a>
@@ -57,6 +63,13 @@ const Navbar: React.FC = () => {
         <a
           href="#contact"
           className="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-full text-sm font-semibold transition-all hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-blue-500/50"
+          onClick={(e) => {
+            e.preventDefault();
+            const element = document.querySelector("#contact");
+            if (element) {
+              element.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
         >
           Hire Me
         </a>

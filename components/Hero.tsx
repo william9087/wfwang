@@ -8,6 +8,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
   const [showBadge, setShowBadge] = useState(false);
   const [showTitle, setShowTitle] = useState(false);
   const [showDescription, setShowDescription] = useState(false);
+  const [showSideImages, setShowSideImages] = useState(false);
 
   useEffect(() => {
     // First animation: Badge appears from bottom after 300ms
@@ -19,11 +20,23 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
     // Third animation: Description and buttons appear from bottom after 2100ms
     const timer3 = setTimeout(() => setShowDescription(true), 1800);
 
+    // Fourth animation: Side images appear from bottom after 2400ms
+    const timer4 = setTimeout(() => setShowSideImages(true), 2400);
+
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
+      clearTimeout(timer4);
     };
+  }, []);
+
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -33,32 +46,69 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
       <div className="absolute top-1/3 -right-12 w-80 h-80 bg-purple-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
       <div className="absolute bottom-1/4 left-1/2 w-72 h-72 bg-pink-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-4000"></div>
 
+      {/* Left Robot Image */}
+      <div
+        className="absolute bottom-0 left-0 z-0 hidden lg:block h-[85vh] w-auto max-w-[35vw] transition-all duration-1000 ease-out pointer-events-none"
+        style={{
+          opacity: showSideImages ? Math.max(0, 1 - scrollY / 1300) : 0,
+          maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 70%, transparent 100%)",
+        }}
+      >
+        <img
+          src="/left_robot.png"
+          alt=""
+          className="w-full h-full object-contain object-bottom transition-transform duration-1000 ease-out"
+          style={{
+            transform: `translateY(${showSideImages ? scrollY * 0.4 : 50}px)`,
+          }}
+        />
+      </div>
+
+      {/* Right Human Image */}
+      <div
+        className="absolute bottom-0 right-0 z-0 hidden lg:block h-[85vh] w-auto max-w-[35vw] transition-all duration-1000 ease-out pointer-events-none"
+        style={{
+          opacity: showSideImages ? Math.max(0, 1 - scrollY / 1300) : 0,
+          maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 70%, transparent 100%)",
+        }}
+      >
+        <img
+          src="/right_human.png"
+          alt=""
+          className="w-full h-full object-contain object-bottom transition-transform duration-1000 ease-out"
+          style={{
+            transform: `translateY(${showSideImages ? scrollY * 0.4 : 50}px)`,
+          }}
+        />
+      </div>
+
       <div className="z-10 text-center max-w-4xl space-y-6">
         {/* FIRST: Badge - M.S. IN COMPUTER SCIENCE @ GEORGIA STATE UNIVERSITY */}
         <div
-          className={`inline-block px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase mb-4 transition-all duration-1000 ease-out ${
-            showBadge ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-          }`}
+          className={`inline-block px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase mb-4 transition-all duration-1000 ease-out ${showBadge ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+            }`}
         >
           {data.education.degree} @ {data.education.university}
         </div>
 
         {/* SECOND: Title - Hi, I'm Wei Fan. */}
         <h1
-          className={`text-6xl md:text-8xl font-extrabold tracking-tight transition-all duration-1000 ease-out ${
-            showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-          }`}
+          className={`text-6xl md:text-8xl font-extrabold tracking-tight transition-all duration-1000 ease-out ${showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+            }`}
         >
           Hi, I'm <span className="text-gradient">Wei Fan.</span>
         </h1>
 
         {/* THIRD: Description and Buttons */}
         <div
-          className={`transition-all duration-1000 ease-out ${
-            showDescription
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-16"
-          }`}
+          className={`transition-all duration-1000 ease-out ${showDescription
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-16"
+            }`}
         >
           <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
             {data.role}. {data.bio}
