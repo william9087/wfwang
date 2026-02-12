@@ -67,7 +67,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
         }}
       >
         <img
-          src="/left_robot.png"
+          src="/left_robot.jpg"
           alt=""
           decoding="async"
           className="w-full h-full object-contain object-bottom transition-transform duration-700 ease-out will-change-transform"
@@ -89,7 +89,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
         }}
       >
         <img
-          src="/right_human.png"
+          src="/right_human.jpg"
           alt=""
           decoding="async"
           className="w-full h-full object-contain object-bottom transition-transform duration-700 ease-out will-change-transform"
