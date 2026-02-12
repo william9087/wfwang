@@ -59,9 +59,10 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
         <img
           src="/left_robot.png"
           alt=""
-          className="w-full h-full object-contain object-bottom transition-transform duration-1000 ease-out"
+          decoding="async"
+          className="w-full h-full object-contain object-bottom transition-transform duration-500 ease-out will-change-transform"
           style={{
-            transform: `translateY(${showSideImages ? scrollY * 0.4 : 50}px)`,
+            transform: `translate3d(0, ${showSideImages ? scrollY * 0.4 : 50}px, 0)`,
           }}
         />
       </div>
@@ -79,9 +80,10 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
         <img
           src="/right_human.png"
           alt=""
-          className="w-full h-full object-contain object-bottom transition-transform duration-1000 ease-out"
+          decoding="async"
+          className="w-full h-full object-contain object-bottom transition-transform duration-500 ease-out will-change-transform"
           style={{
-            transform: `translateY(${showSideImages ? scrollY * 0.4 : 50}px)`,
+            transform: `translate3d(0, ${showSideImages ? scrollY * 0.4 : 50}px, 0)`,
           }}
         />
       </div>
