@@ -34,9 +34,18 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    let requestRef: number;
+    const handleScroll = () => {
+      // This tells the browser: "Update the state ONLY when you're ready to draw"
+      requestRef = requestAnimationFrame(() => {
+        setScrollY(window.scrollY);
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(requestRef);
+    };
   }, []);
 
   return (
@@ -51,18 +60,19 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
         className="absolute bottom-0 left-0 z-0 hidden lg:block h-[85vh] w-auto max-w-[35vw] transition-all duration-1000 ease-out pointer-events-none"
         style={{
           opacity: showSideImages ? Math.max(0, 1 - scrollY / 1300) : 0,
-          maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+          maskImage:
+            "radial-gradient(circle at center, black 40%, transparent 95%)",
           WebkitMaskImage:
-            "linear-gradient(to bottom, black 70%, transparent 100%)",
+            "radial-gradient(circle at center, black 40%, transparent 95%)",
         }}
       >
         <img
           src="/left_robot.png"
           alt=""
           decoding="async"
-          className="w-full h-full object-contain object-bottom transition-transform duration-500 ease-out will-change-transform"
+          className="w-full h-full object-contain object-bottom transition-transform duration-700 ease-out will-change-transform"
           style={{
-            transform: `translate3d(0, ${showSideImages ? scrollY * 0.4 : 50}px, 0)`,
+            transform: `translate3d(0, ${showSideImages ? scrollY * 0.4 : 80}px, 0)`,
           }}
         />
       </div>
@@ -72,18 +82,19 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
         className="absolute bottom-0 right-0 z-0 hidden lg:block h-[85vh] w-auto max-w-[35vw] transition-all duration-1000 ease-out pointer-events-none"
         style={{
           opacity: showSideImages ? Math.max(0, 1 - scrollY / 1300) : 0,
-          maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+          maskImage:
+            "radial-gradient(circle at center, black 40%, transparent 95%)",
           WebkitMaskImage:
-            "linear-gradient(to bottom, black 70%, transparent 100%)",
+            "radial-gradient(circle at center, black 40%, transparent 95%)",
         }}
       >
         <img
           src="/right_human.png"
           alt=""
           decoding="async"
-          className="w-full h-full object-contain object-bottom transition-transform duration-500 ease-out will-change-transform"
+          className="w-full h-full object-contain object-bottom transition-transform duration-700 ease-out will-change-transform"
           style={{
-            transform: `translate3d(0, ${showSideImages ? scrollY * 0.4 : 50}px, 0)`,
+            transform: `translate3d(0, ${showSideImages ? scrollY * 0.4 : 80}px, 0)`,
           }}
         />
       </div>
@@ -91,26 +102,29 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
       <div className="z-10 text-center max-w-4xl space-y-6">
         {/* FIRST: Badge - M.S. IN COMPUTER SCIENCE @ GEORGIA STATE UNIVERSITY */}
         <div
-          className={`inline-block px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase mb-4 transition-all duration-1000 ease-out ${showBadge ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-            }`}
+          className={`inline-block px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase mb-4 transition-all duration-1000 ease-out ${
+            showBadge ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+          }`}
         >
           {data.education.degree} @ {data.education.university}
         </div>
 
         {/* SECOND: Title - Hi, I'm Wei Fan. */}
         <h1
-          className={`text-6xl md:text-8xl font-extrabold tracking-tight transition-all duration-1000 ease-out ${showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-            }`}
+          className={`text-6xl md:text-8xl font-extrabold tracking-tight transition-all duration-1000 ease-out ${
+            showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+          }`}
         >
           Hi, I'm <span className="text-gradient">Wei Fan.</span>
         </h1>
 
         {/* THIRD: Description and Buttons */}
         <div
-          className={`transition-all duration-1000 ease-out ${showDescription
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-16"
-            }`}
+          className={`transition-all duration-1000 ease-out ${
+            showDescription
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-16"
+          }`}
         >
           <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
             {data.role}. {data.bio}
