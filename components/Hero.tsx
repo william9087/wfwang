@@ -9,18 +9,13 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
   const [showTitle, setShowTitle] = useState(false);
   const [showDescription, setShowDescription] = useState(false);
   const [showSideImages, setShowSideImages] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
+  // Staggered animations
   useEffect(() => {
-    // First animation: Badge appears from bottom after 300ms
     const timer1 = setTimeout(() => setShowBadge(true), 300);
-
-    // Second animation: Title appears from bottom after 1200ms
     const timer2 = setTimeout(() => setShowTitle(true), 1000);
-
-    // Third animation: Description and buttons appear from bottom after 2100ms
     const timer3 = setTimeout(() => setShowDescription(true), 1800);
-
-    // Fourth animation: Side images appear from bottom after 2400ms
     const timer4 = setTimeout(() => setShowSideImages(true), 2400);
 
     return () => {
@@ -31,21 +26,22 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
     };
   }, []);
 
-  const [scrollY, setScrollY] = useState(0);
-
+  // Smooth scroll handler
   useEffect(() => {
-    let requestRef: number;
+    let ticking = false;
+
     const handleScroll = () => {
-      // This tells the browser: "Update the state ONLY when you're ready to draw"
-      requestRef = requestAnimationFrame(() => {
-        setScrollY(window.scrollY);
-      });
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      cancelAnimationFrame(requestRef);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -69,8 +65,9 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
         <img
           src="/left_robot.webp"
           alt=""
+          loading="eager"
           decoding="async"
-          className="w-full h-full object-contain object-bottom transition-transform duration-700 ease-out will-change-transform"
+          className="w-full h-full object-contain object-bottom will-change-transform"
           style={{
             transform: `translate3d(0, ${showSideImages ? scrollY * 0.4 : 80}px, 0)`,
           }}
@@ -91,8 +88,9 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
         <img
           src="/right_human.webp"
           alt=""
+          loading="eager"
           decoding="async"
-          className="w-full h-full object-contain object-bottom transition-transform duration-700 ease-out will-change-transform"
+          className="w-full h-full object-contain object-bottom will-change-transform"
           style={{
             transform: `translate3d(0, ${showSideImages ? scrollY * 0.4 : 80}px, 0)`,
           }}
@@ -100,7 +98,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
       </div>
 
       <div className="z-10 text-center max-w-4xl space-y-6">
-        {/* FIRST: Badge - M.S. IN COMPUTER SCIENCE @ GEORGIA STATE UNIVERSITY */}
+        {/* FIRST: Badge */}
         <div
           className={`inline-block px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase mb-4 transition-all duration-1000 ease-out ${
             showBadge ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
@@ -109,7 +107,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
           {data.education.degree} @ {data.education.university}
         </div>
 
-        {/* SECOND: Title - Hi, I'm Wei Fan. */}
+        {/* SECOND: Title */}
         <h1
           className={`text-6xl md:text-8xl font-extrabold tracking-tight transition-all duration-1000 ease-out ${
             showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
@@ -141,6 +139,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
               href="/resume.pdf"
               download="Wei_Fan_Wang_Resume.pdf"
               target="_blank"
+              rel="noopener noreferrer"
               className="px-8 py-4 bg-transparent border border-blue-500/50 text-blue-400 font-bold rounded-xl hover:bg-blue-500/10 transition-all hover:scale-105 active:scale-95 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
             >
               Download Resume
