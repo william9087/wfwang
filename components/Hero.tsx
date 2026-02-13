@@ -53,13 +53,14 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
 
       {/* Left Robot Image */}
       <div
-        className="absolute bottom-0 left-0 z-0 hidden lg:block h-[85vh] w-auto max-w-[35vw] transition-all duration-1000 ease-out pointer-events-none"
+        className={`absolute bottom-0 -left-[10%] lg:-left-[5%] z-0 hidden lg:block h-[85vh] w-auto max-w-[30vw] pointer-events-none transition-all duration-1000 ease-out ${showSideImages
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-16"
+          }`}
         style={{
-          opacity: showSideImages ? Math.max(0, 1 - scrollY / 1300) : 0,
-          maskImage:
-            "radial-gradient(circle at center, black 40%, transparent 95%)",
+          maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
           WebkitMaskImage:
-            "radial-gradient(circle at center, black 40%, transparent 95%)",
+            "linear-gradient(to bottom, black 60%, transparent 100%)",
         }}
       >
         <img
@@ -69,20 +70,21 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
           decoding="async"
           className="w-full h-full object-contain object-bottom will-change-transform"
           style={{
-            transform: `translate3d(0, ${showSideImages ? scrollY * 0.4 : 80}px, 0)`,
+            transform: `translate3d(0, ${scrollY * 0.4}px, 0)`,
           }}
         />
       </div>
 
       {/* Right Human Image */}
       <div
-        className="absolute bottom-0 right-0 z-0 hidden lg:block h-[85vh] w-auto max-w-[35vw] transition-all duration-1000 ease-out pointer-events-none"
+        className={`absolute bottom-0 -right-[10%] lg:-right-[5%] z-0 hidden lg:block h-[85vh] w-auto max-w-[30vw] pointer-events-none transition-all duration-1000 ease-out ${showSideImages
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-16"
+          }`}
         style={{
-          opacity: showSideImages ? Math.max(0, 1 - scrollY / 1300) : 0,
-          maskImage:
-            "radial-gradient(circle at center, black 40%, transparent 95%)",
+          maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
           WebkitMaskImage:
-            "radial-gradient(circle at center, black 40%, transparent 95%)",
+            "linear-gradient(to bottom, black 60%, transparent 100%)",
         }}
       >
         <img
@@ -92,7 +94,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
           decoding="async"
           className="w-full h-full object-contain object-bottom will-change-transform"
           style={{
-            transform: `translate3d(0, ${showSideImages ? scrollY * 0.4 : 80}px, 0)`,
+            transform: `translate3d(0, ${scrollY * 0.4}px, 0)`,
           }}
         />
       </div>
@@ -100,31 +102,28 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
       <div className="z-10 text-center max-w-4xl space-y-6">
         {/* FIRST: Badge */}
         <div
-          className={`inline-block px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase mb-4 transition-all duration-1000 ease-out ${
-            showBadge ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-          }`}
+          className={`inline-block px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase mb-4 transition-all duration-1000 ease-out ${showBadge ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+            }`}
         >
           {data.education.degree} @ {data.education.university}
         </div>
 
         {/* SECOND: Title */}
         <h1
-          className={`text-6xl md:text-8xl font-extrabold tracking-tight transition-all duration-1000 ease-out ${
-            showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-          }`}
+          className={`text-5xl md:text-7xl font-extrabold tracking-tight transition-all duration-1000 ease-out ${showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+            }`}
         >
           Hi, I'm <span className="text-gradient">Wei Fan.</span>
         </h1>
 
         {/* THIRD: Description and Buttons */}
         <div
-          className={`transition-all duration-1000 ease-out ${
-            showDescription
+          className={`transition-all duration-1000 ease-out ${showDescription
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-16"
-          }`}
+            }`}
         >
-          <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
             {data.role}. {data.bio}
           </p>
 
