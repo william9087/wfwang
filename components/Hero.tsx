@@ -47,9 +47,9 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
   return (
     <section className="relative min-h-screen flex flex-col justify-center items-center pt-20 px-6 overflow-hidden">
       {/* Background Blobs */}
-      <div className="absolute top-1/4 -left-12 w-72 h-72 bg-blue-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
-      <div className="absolute top-1/3 -right-12 w-80 h-80 bg-purple-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-1/4 left-1/2 w-72 h-72 bg-pink-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-4000"></div>
+      <div className="absolute top-1/4 -left-12 w-72 h-72 bg-blue-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-blob"></div>
+      <div className="absolute top-1/3 -right-12 w-80 h-80 bg-cyan-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-blob animation-delay-2000"></div>
+      <div className="absolute bottom-1/4 left-1/2 w-72 h-72 bg-blue-800/20 rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-blob animation-delay-4000"></div>
 
       {/* Left Robot Image */}
       <div
@@ -113,7 +113,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
           className={`text-5xl md:text-7xl font-extrabold tracking-tight transition-all duration-1000 ease-out ${showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
             }`}
         >
-          Hi, I'm <span className="text-gradient">Wei Fan.</span>
+          Hi, I'm <span className="text-gradient">Wei Fan</span>.
         </h1>
 
         {/* THIRD: Description and Buttons */}
@@ -124,7 +124,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
             }`}
         >
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            {data.role}. {data.bio}
+            {data.bio}
           </p>
 
           <div className="pt-8 flex flex-col sm:flex-row justify-center gap-4">
