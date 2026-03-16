@@ -85,7 +85,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
             <div className="p-8 pt-0 flex gap-4">
               {project.github && (
                 <a
-                  target="blank"
+                  target="_blank"
                   href={project.github}
                   className="flex-1 py-3 text-center rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all font-semibold text-sm"
                 >
