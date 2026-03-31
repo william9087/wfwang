@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
+import VideoIntro from "./components/VideoIntro";
 import SkillsGrid from "./components/SkillsGrid";
 import ExperienceTimeline from "./components/ExperienceTimeline";
 import ProjectShowcase from "./components/ProjectShowcase";
@@ -40,7 +40,7 @@ const App: React.FC = () => {
       <Navbar />
 
       <main>
-        <Hero data={PORTFOLIO_DATA} />
+        <VideoIntro />
         <SkillsGrid skills={PORTFOLIO_DATA.skills} />
         <ExperienceTimeline experiences={PORTFOLIO_DATA.experiences} />
         <ProjectShowcase
