@@ -16,6 +16,7 @@ export interface Experience {
   period: string;
   description: string[];
   skills: string[];
+  link?: string;
 }
 
 export interface SkillCategory {

@@ -63,10 +63,21 @@ export const PORTFOLIO_DATA = {
   ] as SkillCategory[],
   experiences: [
     {
+      id: "exp-insurepot",
+      company: "Insurepot.ai",
+      role: "Co-Founder",
+      period: "May 2026 - Present",
+      link: "https://insurepot.ai",
+      description: [
+        "Co-founded an AI-driven insurance technology startup, leading product direction and engineering of the core platform.",
+      ],
+      skills: ["AI", "Startup", "Product Strategy", "Full-Stack Development"],
+    },
+    {
       id: "exp-1",
       company: "EC Restaurant Supply",
       role: "Software Engineer",
-      period: "Jan 2026 - Present",
+      period: "Jan 2026 - Apr 2026",
       description: [
         "Architected an asynchronous web scraping pipeline (Python, nodriver, Playwright, pandas) to automate price monitoring across e-commerce platforms, processing 9,000+ SKUs and eliminating hours of manual research weekly.",
         "Defeated advanced anti-bot detection by migrating from Playwright to undetected Chrome (nodriver), implementing randomized request timing and stealth browser contexts to achieve near-100% data extraction reliability at scale.",
@@ -86,18 +97,21 @@ export const PORTFOLIO_DATA = {
       id: "exp-2",
       company: "ZeonSolutions.ai",
       role: "AI Engineering Intern",
-      period: "Sep 2025 - Present",
+      period: "Sep 2025 - Apr 2026",
+      link: "https://zeonsolutions.ai",
       description: [
-        "Built an automated video analysis pipeline using n8n workflow automation, enabling scalable video crawling, data extraction, and ML-based content analysis for social media insights.",
+        "Designed and shipped a full-stack marketing website for Regal Industrial Corporation using Next.js, TypeScript, and Framer Motion, delivering 5+ production-grade pages with polished animations and high-performance page transitions.",
+        "Implemented JSON-LD structured data, OpenGraph metadata, and technical SEO best practices to improve search engine indexing and surface SSPC certifications and regulatory compliance.",
         "Led technical consultations with partner companies on system architecture, deployment workflows, and API integration to embed AI-driven automation tools into client operations.",
       ],
       skills: [
-        "AI Automation",
-        "n8n",
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Framer Motion",
+        "SEO",
         "System Architecture",
         "API Integration",
-        "Machine Learning",
-        "Workflow Automation",
       ],
     },
     {
