@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface HeroProps {
   data: any;
@@ -9,43 +9,35 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
   const [showTitle, setShowTitle] = useState(false);
   const [showDescription, setShowDescription] = useState(false);
   const [showSideImages, setShowSideImages] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
+  const heroRef = useRef<HTMLElement>(null);
 
-  // Staggered animations
+  // Staggered reveal when Hero scrolls into view
   useEffect(() => {
-    const timer1 = setTimeout(() => setShowBadge(true), 300);
-    const timer2 = setTimeout(() => setShowTitle(true), 1000);
-    const timer3 = setTimeout(() => setShowDescription(true), 1800);
-    const timer4 = setTimeout(() => setShowSideImages(true), 2400);
+    const timers: ReturnType<typeof setTimeout>[] = [];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          timers.push(setTimeout(() => setShowBadge(true), 100));
+          timers.push(setTimeout(() => setShowTitle(true), 400));
+          timers.push(setTimeout(() => setShowDescription(true), 800));
+          timers.push(setTimeout(() => setShowSideImages(true), 1000));
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (heroRef.current) observer.observe(heroRef.current);
 
     return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-      clearTimeout(timer4);
+      observer.disconnect();
+      timers.forEach(clearTimeout);
     };
-  }, []);
-
-  // Smooth scroll handler
-  useEffect(() => {
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center pt-20 px-6 overflow-hidden">
+    <section ref={heroRef} className="relative min-h-screen flex flex-col justify-center items-center pt-20 px-6 overflow-hidden">
       {/* Background Blobs */}
       <div className="absolute top-1/4 -left-12 w-72 h-72 bg-blue-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-blob"></div>
       <div className="absolute top-1/3 -right-12 w-80 h-80 bg-cyan-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-blob animation-delay-2000"></div>
@@ -53,14 +45,12 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
 
       {/* Left Robot Image */}
       <div
-        className={`absolute bottom-0 -left-[10%] lg:-left-[5%] z-0 hidden lg:block h-[85vh] w-auto max-w-[30vw] pointer-events-none transition-all duration-1000 ease-out ${showSideImages
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-16"
-          }`}
+        className={`absolute bottom-0 -left-[10%] lg:-left-[5%] z-0 hidden lg:block h-[85vh] w-auto max-w-[30vw] pointer-events-none transition-all duration-1000 ease-out ${
+          showSideImages ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+        }`}
         style={{
           maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, black 60%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
         }}
       >
         <img
@@ -68,23 +58,18 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
           alt=""
           loading="eager"
           decoding="async"
-          className="w-full h-full object-contain object-bottom will-change-transform"
-          style={{
-            transform: `translate3d(0, ${scrollY * 0.4}px, 0)`,
-          }}
+          className="w-full h-full object-contain object-bottom"
         />
       </div>
 
       {/* Right Human Image */}
       <div
-        className={`absolute bottom-0 -right-[10%] lg:-right-[5%] z-0 hidden lg:block h-[85vh] w-auto max-w-[30vw] pointer-events-none transition-all duration-1000 ease-out ${showSideImages
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-16"
-          }`}
+        className={`absolute bottom-0 -right-[10%] lg:-right-[5%] z-0 hidden lg:block h-[85vh] w-auto max-w-[30vw] pointer-events-none transition-all duration-1000 ease-out ${
+          showSideImages ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+        }`}
         style={{
           maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, black 60%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
         }}
       >
         <img
@@ -92,36 +77,34 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
           alt=""
           loading="eager"
           decoding="async"
-          className="w-full h-full object-contain object-bottom will-change-transform"
-          style={{
-            transform: `translate3d(0, ${scrollY * 0.4}px, 0)`,
-          }}
+          className="w-full h-full object-contain object-bottom"
         />
       </div>
 
       <div className="z-10 text-center max-w-4xl space-y-6">
-        {/* FIRST: Badge */}
+        {/* Badge */}
         <div
-          className={`inline-block px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase mb-4 transition-all duration-1000 ease-out ${showBadge ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-            }`}
+          className={`inline-block px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase mb-4 transition-all duration-700 ease-out ${
+            showBadge ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
         >
           {data.education.degree} @ {data.education.university}
         </div>
 
-        {/* SECOND: Title */}
+        {/* Title */}
         <h1
-          className={`text-5xl md:text-7xl font-extrabold tracking-tight transition-all duration-1000 ease-out ${showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-            }`}
+          className={`text-5xl md:text-7xl font-extrabold tracking-tight transition-all duration-700 ease-out ${
+            showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
         >
           Hi, I'm <span className="text-gradient">Wei Fan</span>.
         </h1>
 
-        {/* THIRD: Description and Buttons */}
+        {/* Description and Buttons */}
         <div
-          className={`transition-all duration-1000 ease-out ${showDescription
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-16"
-            }`}
+          className={`transition-all duration-700 ease-out ${
+            showDescription ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
         >
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
             {data.bio}
@@ -155,18 +138,8 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-10 animate-bounce">
-        <svg
-          className="w-6 h-6 text-gray-500"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          />
+        <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
       </div>
     </section>
